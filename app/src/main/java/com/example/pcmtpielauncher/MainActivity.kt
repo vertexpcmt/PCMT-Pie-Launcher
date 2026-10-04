@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -14,10 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pcmtpielauncher.ui.theme.PCMTPieLauncherTheme
+import kotlin.math.cos
+import kotlin.math.sin
 
 class MainActivity : ComponentActivity() {
 
@@ -42,7 +44,34 @@ fun PCMTLauncher() {
         contentAlignment = Alignment.Center
     ) {
 
-        // Center PCMT button
+        val items = listOf(
+            "1", "2", "3", "4",
+            "5", "6", "7", "8"
+        )
+
+        val radius = 135.dp
+
+        items.forEachIndexed { index, label ->
+
+            val angle =
+                Math.toRadians((index * 45.0) - 90.0)
+
+            val x =
+                (cos(angle) * radius.value).dp
+
+            val y =
+                (sin(angle) * radius.value).dp
+
+            PieItem(
+                label = label,
+                modifier = Modifier.offset(
+                    x = x,
+                    y = y
+                )
+            )
+        }
+
+        // Center button
         Box(
             modifier = Modifier
                 .size(110.dp)
@@ -56,21 +85,9 @@ fun PCMTLauncher() {
             Text(
                 text = "PCMT",
                 color = Color.White,
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 22.sp
             )
         }
-
-        // Pie slots
-        PieItem("1", Modifier.align(Alignment.TopCenter))
-        PieItem("2", Modifier.align(Alignment.CenterEnd))
-        PieItem("3", Modifier.align(Alignment.BottomCenter))
-        PieItem("4", Modifier.align(Alignment.CenterStart))
-
-        PieItem("5", Modifier.align(Alignment.TopEnd))
-        PieItem("6", Modifier.align(Alignment.BottomEnd))
-        PieItem("7", Modifier.align(Alignment.BottomStart))
-        PieItem("8", Modifier.align(Alignment.TopStart))
     }
 }
 
@@ -79,9 +96,10 @@ fun PieItem(
     label: String,
     modifier: Modifier = Modifier
 ) {
+
     Box(
         modifier = modifier
-            .size(62.dp)
+            .size(64.dp)
             .background(
                 color = Color(0xFF30303A),
                 shape = CircleShape
@@ -89,11 +107,11 @@ fun PieItem(
             .clickable { },
         contentAlignment = Alignment.Center
     ) {
+
         Text(
             text = label,
             color = Color.White,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
+            fontSize = 18.sp
         )
     }
 }
