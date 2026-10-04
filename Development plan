@@ -1,0 +1,21 @@
+Development plan
+
+We'll build it incrementally:
+
+Create the PCMT Pie Launcher project
+Make it selectable as the phone's default Home app
+Build the main launcher screen
+Create the pie/radial menu
+Detect and display installed apps
+Launch apps from the pie
+Add customization:
+Pie size
+Number of slots
+Icons
+Position
+Colors/theme
+Add edge/corner gesture to open the pie
+Add folders/categories
+Add launcher settings
+Test on your Redmi 8
+Test compatibility with other Android devices
