@@ -133,34 +133,112 @@ fun PCMTLauncher() {
     ) {
 
         // -----------------------------------------------------
-        // OUTER BLUE RING
+        // COOL SCI-FI OUTER RING
         // -----------------------------------------------------
 
         Canvas(
             modifier = Modifier.size(390.dp)
         ) {
 
+            val centerX = size.width / 2f
+            val centerY = size.height / 2f
+
+            // Soft outer circle
+            drawCircle(
+                color = Color(0xFF168CFF).copy(alpha = 0.10f),
+                radius = size.minDimension / 2f - 4.dp.toPx(),
+                style = androidx.compose.ui.graphics.drawscope.Stroke(
+                    width = 2.dp.toPx()
+                )
+            )
+
+            // Main rotating segmented arc
             drawArc(
                 color = Color(0xFF168CFF),
                 startAngle = blueRotation.value,
-                sweepAngle = 100f,
+                sweepAngle = 125f,
                 useCenter = false,
                 style = androidx.compose.ui.graphics.drawscope.Stroke(
-                    width = 5.dp.toPx(),
+                    width = 6.dp.toPx(),
                     cap = StrokeCap.Round
                 )
             )
 
+            // Opposite smaller arc
             drawArc(
-                color = Color(0xFF168CFF).copy(alpha = 0.25f),
+                color = Color(0xFF168CFF).copy(alpha = 0.55f),
                 startAngle = blueRotation.value + 180f,
-                sweepAngle = 75f,
+                sweepAngle = 70f,
                 useCenter = false,
                 style = androidx.compose.ui.graphics.drawscope.Stroke(
                     width = 3.dp.toPx(),
                     cap = StrokeCap.Round
                 )
             )
+
+            // Thin inner rotating arc
+            drawArc(
+                color = Color(0xFF42A5FF).copy(alpha = 0.75f),
+                startAngle = -blueRotation.value * 0.65f + 35f,
+                sweepAngle = 45f,
+                useCenter = false,
+                style = androidx.compose.ui.graphics.drawscope.Stroke(
+                    width = 2.dp.toPx(),
+                    cap = StrokeCap.Round
+                )
+            )
+
+            // Small fixed-style markers around the ring
+            for (i in 0 until 12) {
+
+                val angle =
+                    Math.toRadians(
+                        (i * 30.0) - 90.0
+                    )
+
+                val outerRadius =
+                    size.minDimension / 2f - 13.dp.toPx()
+
+                val innerRadius =
+                    outerRadius - 8.dp.toPx()
+
+                val x1 =
+                    centerX +
+                            cos(angle).toFloat() *
+                            innerRadius
+
+                val y1 =
+                    centerY +
+                            sin(angle).toFloat() *
+                            innerRadius
+
+                val x2 =
+                    centerX +
+                            cos(angle).toFloat() *
+                            outerRadius
+
+                val y2 =
+                    centerY +
+                            sin(angle).toFloat() *
+                            outerRadius
+
+                drawLine(
+                    color =
+                        Color(0xFF168CFF)
+                            .copy(alpha = 0.35f),
+                    start =
+                        androidx.compose.ui.geometry.Offset(
+                            x1,
+                            y1
+                        ),
+                    end =
+                        androidx.compose.ui.geometry.Offset(
+                            x2,
+                            y2
+                        ),
+                    strokeWidth = 2.dp.toPx()
+                )
+            }
         }
 
         // -----------------------------------------------------
@@ -396,42 +474,6 @@ fun PieAppItem(
             },
         contentAlignment = Alignment.Center
     ) {
-
-        // -----------------------------------------------------
-        // BLUE APP RING
-        // -----------------------------------------------------
-
-        Canvas(
-            modifier = Modifier.size(78.dp)
-        ) {
-
-            drawArc(
-                color = Color(0xFF168CFF),
-                startAngle = blueRotation,
-                sweepAngle = 90f,
-                useCenter = false,
-                style =
-                    androidx.compose.ui.graphics.drawscope.Stroke(
-                        width = 3.dp.toPx(),
-                        cap = StrokeCap.Round
-                    )
-            )
-
-            drawArc(
-                color =
-                    Color(0xFF168CFF)
-                        .copy(alpha = 0.35f),
-                startAngle =
-                    blueRotation + 180f,
-                sweepAngle = 55f,
-                useCenter = false,
-                style =
-                    androidx.compose.ui.graphics.drawscope.Stroke(
-                        width = 2.dp.toPx(),
-                        cap = StrokeCap.Round
-                    )
-            )
-        }
 
         // -----------------------------------------------------
         // REAL APP ICON
